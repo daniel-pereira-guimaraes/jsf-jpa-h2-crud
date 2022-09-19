@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title><ui:insert name="title">Person edit</ui:insert></title>
+	<h:outputStylesheet library="css" name="base.css" />
+	<h:outputStylesheet library="css" name="form.css" />
+	<script>
+		window.onload = () => { 
+			document.getElementById('form:firstName').focus(); 
+		}
+	</script>
+</h:head>
+
+<h:body>
+
+	<div class="content">
+		<h1>PERSON</h1>
+
+		<h:form id="form" styleClass="form">
+
+			<h:messages globalOnly="true" styleClass="error" />
+
+			<h:inputHidden value="#{person.id}" />
+
+			<div class="form-horz-box">
+				<div class="form-field-box">
+					First name:
+					<h:inputText id="firstName" value="#{person.firstName}"
+						label="First name" required="true"
+						requiredMessage="First name is required." />
+					<h:message for="firstName" styleClass="error" />
+				</div>
+
+				<div class="form-field-box">
+					Last name:
+					<h:inputText id="lastName" value="#{person.lastName}"
+						label="Last name" required="true"
+						requiredMessage="Last name is required." />
+					<h:message for="lastName" styleClass="error" />
+				</div>
+			</div>
+
+			<div class="tool-bar">
+				<h:commandButton value="Save" styleClass="button button-save"
+					action="#{personController.save(person)}" />
+				<h:button value="Cancel" styleClass="button"
+					onclick="if (!confirm('Discard changes?')) return false"
+					immediate="true" outcome="person_list" />
+			</div>
+
+		</h:form>
+	</div>
+
+</h:body>
+
+</html>

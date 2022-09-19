@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+	<f:event listener="#{personController.loadList}" type="preRenderView" />
+</f:metadata>
+
+<h:head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>Persons</title>
+	<h:outputStylesheet library="css" name="base.css" />
+	<h:outputStylesheet library="css" name="table.css" />
+	<script>
+		window.onload = () => { 
+			searchInput = document.getElementById('search-form:search-input');
+			searchInput.focus();
+			searchInput.select();
+		}
+	</script>
+</h:head>
+
+<body>
+	<div class="content">
+		<h1>PERSONS</h1>
+
+		<h:messages />
+
+		<div class="tool-bar">
+			<h:button value="Add person" styleClass="button button-add"
+				outcome="person_edit" />
+			<h:button value="Reload data" styleClass="button"
+				action="#{personController.loadList}" />
+		</div>
+
+		<h:form id="search-form" styleClass="tool-bar">
+			<div class="form-horz-box">
+				<h:inputText id="search-input" styleClass="input-search"
+					value="#{personController.searchText}" />
+				<h:commandButton value="Search" class="button button-search" />
+			</div>
+		</h:form>
+
+		<h:form>
+
+			<h:dataTable value="#{personController.list}" var="p"
+				styleClass="table" headerClass="table-header"
+				rowClasses="table-even-row, table-odd-row">
+
+				<h:column>
+					<f:facet name="header">Id</f:facet>
+					#{p.id}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">First name</f:facet>
+					#{p.firstName}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Last name</f:facet>
+					#{p.lastName}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Actions</f:facet>
+					<h:commandButton value="Edit"
+						styleClass="table-button table-button-edit"
+						action="#{personController.edit(p.id)}" />
+					<h:commandButton value="Delete"
+						styleClass="table-button table-button-delete"
+						onclick="return confirm('Delete person?')"
+						action="#{personController.delete(p.id)}" />
+				</h:column>
+
+			</h:dataTable>
+		</h:form>
+	</div>
+
+</body>
+
+</html>
